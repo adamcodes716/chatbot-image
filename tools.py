@@ -2,6 +2,7 @@ from langchain.tools import BaseTool
 from transformers import BlipProcessor, BlipForConditionalGeneration, DetrImageProcessor, DetrForObjectDetection
 from PIL import Image
 import torch
+from functions import extract_text_from_image
 
 
 class ImageCaptionTool(BaseTool):
@@ -70,3 +71,16 @@ class ObjectDetectionTool(BaseTool):
 class EchoTool(BaseTool):
     name: str = "echo"
     description: str = "Echoes back the input string."
+
+
+class OCRTool(BaseTool):
+    name: str = "image_text_extractor"
+    description: str = (
+        "Use this tool when given the path to an image and you want to extract any visible text from it using OCR."
+    )
+
+    def _run(self, img_path):
+        return extract_text_from_image(img_path)
+
+    def _arun(self, img_path):
+        raise NotImplementedError("This tool does not support async")

@@ -9,7 +9,7 @@ from langchain.tools import BaseTool
 from langchain_core.messages import HumanMessage, BaseMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langgraph.graph import StateGraph
-from tools import ImageCaptionTool, ObjectDetectionTool
+from tools import ImageCaptionTool, ObjectDetectionTool, OCRTool
 
 # --- Define EchoTool using BaseTool (replace with your image tools as needed) ---
 class EchoToolInput(BaseModel):
@@ -41,6 +41,7 @@ if not openai_api_key:
 tools = [
     ImageCaptionTool(),
     ObjectDetectionTool(),
+    OCRTool(),
     # EchoTool(),  # Remove for production
 ]
 llm = ChatOpenAI(
@@ -53,8 +54,9 @@ llm = ChatOpenAI(
 prompt = ChatPromptTemplate.from_messages([
     ("system", 
      "You are an assistant that can use tools to help the user. "
-     "You have access to tools for image captioning and object detection. "
+     "You have access to tools for image captioning, object detection, and text extraction (OCR). "
      "When given an image path, use the appropriate tool. "
+     "Use the OCR tool when the user asks about text in an image. "
      "For follow-up or creative questions, use your previous answers and your own reasoning. "
      "Only use a tool if you need to analyze the image again."
     ),
@@ -96,7 +98,6 @@ if "clear_input" not in st.session_state:
     st.session_state["clear_input"] = False
 if "input_processed" not in st.session_state:
     st.session_state["input_processed"] = False
-if "user_input" not in st.session_state:
     st.session_state["user_input"] = ""
 
 # --- Fix rerun loop and clear input ---

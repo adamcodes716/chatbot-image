@@ -1,6 +1,8 @@
 from transformers import BlipProcessor, BlipForConditionalGeneration, DetrImageProcessor, DetrForObjectDetection
 from PIL import Image
 import torch
+import openai
+import base64
 
 
 def get_image_caption(image_path):
@@ -51,6 +53,40 @@ def detect_objects(image_path):
         detections += ' {}\n'.format(float(score))
 
     return detections
+
+
+def extract_text_from_image(image_path):
+    """
+    Extracts text from an image using OpenAI GPT-4 Vision (current model).
+    """
+    import openai
+    import os
+    import base64
+
+    openai_api_key = os.environ.get("OPENAI_API_KEY")
+    if not openai_api_key:
+        return "OpenAI API key not found."
+
+    with open(image_path, "rb") as image_file:
+        image_bytes = image_file.read()
+        image_base64 = base64.b64encode(image_bytes).decode("utf-8")
+
+    response = openai.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "user", "content": [
+                {"type": "text", "text": "What text do you see in this image?"},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_base64}"
+                    }
+                }
+            ]}
+        ],
+        max_tokens=300
+    )
+    return response.choices[0].message.content
 
 
 if __name__ == '__main__':
