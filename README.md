@@ -8,7 +8,7 @@ This is a Streamlit application that allows users to ask questions about an uplo
 
 1. Clone the repository:
 
-        git clone https://github.com/your-username/image-question-answering.git
+        git clone https://github.com/adamcodes716/chatbot-image
         
 2. Create a Virtual environment in your project:
 
@@ -42,7 +42,7 @@ This is a Streamlit application that allows users to ask questions about an uplo
 
         streamlit run main.py
 
-        or 
+        or if you want to specify the port:
       
         streamlit run main.py --server.port 10015
 
@@ -67,20 +67,3 @@ The application utilizes the following custom tools:
 - **ImageCaptionTool**: Generates a textual caption for the uploaded image.
 - **ObjectDetectionTool**: Performs object detection on the uploaded image and identifies the objects present.
 
-## contributing
-
-Contributions are welcome! If you have any ideas, improvements, or bug fixes, please submit a pull request.
-
-## license
-
-This project is licensed under the MIT License.
-
-## acknowledgements
-
-This project uses the OpenAI GPT-3.5 Turbo model. Visit [OpenAI](https://openai.com/) for more information.
-
-The Streamlit library is used for building the interactive user interface. Visit the [Streamlit documentation](https://docs.streamlit.io/) for more information.
-
-The LangChain library is used for managing the conversational AI agent and tools. Visit the [LangChain GitHub repository](https://github.com/hwchase17/langchain) for more information.
-    
-The Transformers library is used to inference the AI features. Visit [this](https://huggingface.co/Salesforce/blip-image-captioning-large) and [this](https://huggingface.co/facebook/detr-resnet-50) pages for a more comprehensive description of the models used.
