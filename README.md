@@ -40,11 +40,11 @@ This is a Streamlit application that allows users to ask questions about an uplo
 
 6. Run the Streamlit application:
 
-        streamlit run main.py
+        streamlit run src/main.py
 
         or if you want to specify the port:
       
-        streamlit run main.py --server.port 10015
+        streamlit run src/main.py --server.port 10015
 
 7. Open your web browser and go to http://localhost:8501 to access the application.
 
